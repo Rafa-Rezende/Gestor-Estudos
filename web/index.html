@@ -1,0 +1,36 @@
+<h1>Sistema de gerenciamento de estudos </h1>
+<h2>Projeto da fase 1 da disciplina de DevOps</h2>
+<h3>Rafael Rezende Rodrigues</h3>
+<h4>PUC RS Online</h4>
+<br>
+<br>
+<br>
+<input id="feitas" type="number" placeholder="Aulas feitas">
+<input id="total" type="number" placeholder="Total de aulas">
+<button onclick="calcular()">Calcular</button>
+<p id="Saida"></p>
+
+<script>
+    async function calcular() {
+        const feitas = document.getElementById("feitas").value
+        const total = document.getElementById("total").value
+        const saida = document.getElementById("Saida")
+
+        if (feitas === "" || total === "") {
+            saida.textContent = "Preencha os dois campos."
+            return
+        }
+
+        try {
+            const resposta = await fetch(`/percentagem?feitas=${feitas}&total=${total}`)
+            if (!resposta.ok) {
+                saida.textContent = "Erro na API (código " + resposta.status + ")."
+                return
+            }
+            const dados = await resposta.json()
+            saida.textContent = dados.percentagem + "%"
+        } catch (erro) {
+            saida.textContent = "Não consegui falar com o servidor. Abra http://127.0.0.1:8000/"
+        }
+    }
+</script>
