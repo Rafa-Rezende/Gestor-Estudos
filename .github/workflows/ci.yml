@@ -22,3 +22,22 @@ jobs:
      
      - name: Testes
        run: python -m pytest -v
+
+terraform:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Formato
+        working-directory: infra
+        run: terraform fmt - check
+
+      - name: Init
+        working-directory: infra
+        run: terraform fmt -check
+
+      - name: Validate
+        working-directory: infra
+        run: terraform validate
