@@ -7,4 +7,4 @@ client = TestClient(app)
 def test_um_de_quatro():                                      
     resposta = client.get("/percentagem?feitas=1&total=4")  
     dados = resposta.json()                                     
-    assert dados["percentagem"] == 26                         
+    assert dados["percentagem"] == 25                         
