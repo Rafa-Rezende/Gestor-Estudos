@@ -23,7 +23,7 @@ jobs:
      - name: Testes
        run: python -m pytest -v
 
-terraform:
+    terraform:
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v4
@@ -32,11 +32,11 @@ terraform:
 
       - name: Formato
         working-directory: infra
-        run: terraform fmt - check
+        run: terraform fmt -check
 
       - name: Init
         working-directory: infra
-        run: terraform fmt -check
+        run: terraform init -backend=false
 
       - name: Validate
         working-directory: infra
