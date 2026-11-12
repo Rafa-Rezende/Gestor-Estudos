@@ -7,3 +7,8 @@ __pycache__/
 *.tfstate
 *.tfstate.*
 terraform.tfvars
+.env
+.env.*
+# Claude Code: a configuração do projeto vai para o git; o que é só desta máquina não
+.claude/settings.local.json
+.claude/launch.json

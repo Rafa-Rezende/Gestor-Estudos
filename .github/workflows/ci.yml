@@ -41,3 +41,15 @@ jobs:
       - name: Validate
         working-directory: infra
         run: terraform validate
+
+    planejador:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Testes do planejador (Rota de Estudos)
+        run: node --test rota/test/*.test.js

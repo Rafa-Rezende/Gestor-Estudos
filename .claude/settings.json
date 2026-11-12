@@ -1,0 +1,50 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.venv/bin/python -m pytest:*)",
+      "Bash(.venv/bin/python -m py_compile:*)",
+      "Bash(.venv/bin/python rota/montar.py:*)",
+      "Bash(python3 rota/montar.py:*)",
+      "Bash(ruff check:*)",
+      "Bash(node --test:*)",
+      "Bash(node --check:*)",
+      "Bash(terraform -chdir=infra fmt:*)",
+      "Bash(terraform -chdir=infra validate:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git branch:*)"
+    ],
+    "deny": [
+      "Read(./.venv/**)",
+      "Read(./infra/.terraform/**)",
+      "Read(./**/*.tfstate)",
+      "Read(./**/*.tfstate.*)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      { "hooks": [{ "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/inicio-sessao.sh", "timeout": 10 }] }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [{ "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/proteger-arquivos.sh", "timeout": 5 }]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/guarda-bash.sh", "timeout": 5 },
+          { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/antes-do-commit.sh", "timeout": 120, "statusMessage": "ruff, testes, planejador e segredos antes do commit" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [{ "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/depois-de-editar.sh", "timeout": 60 }]
+      }
+    ]
+  }
+}
