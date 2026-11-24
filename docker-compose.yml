@@ -1,5 +1,6 @@
 services:
   app:
+    platform: linux/amd64
     image: ghcr.io/rafa-rezende/gestor-estudos:${TAG:-latest}
     ports:
       - "${PORT:-8000}:8000"
