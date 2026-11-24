@@ -1,0 +1,6 @@
+services:
+  app:
+    image: ghcr.io/rafa-rezende/gestor-estudos:${TAG:-latest}
+    ports:
+      - "${PORT:-8000}:8000"
+    restart: unless-stopped
